@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Battleground | Question</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/quiz.css}">
+
+</head>
+
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <span>QUIZ BATTLEGROUND</span>
+    </div>
+
+    <div class="quiz-header-right">
+
+        <div class="timer-box">
+
+            <span class="timer-label">
+                TIME
+            </span>
+
+            <span id="timer">
+                05:00
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="quiz-page">
+
+    <div class="quiz-layout">
+
+
+        <!-- LEFT SIDE -->
+
+        <aside class="quiz-sidebar">
+
+            <div class="sidebar-title">
+                QUESTION MAP
+            </div>
+
+
+            <div class="question-map">
+
+                <button type="button"
+                        th:each="i : ${#numbers.sequence(1, totalQuestions)}"
+                        th:text="${i}"
+                        th:classappend="${i == questionIndex + 1} ? ' active' : ''"
+                        class="question-number">
+                </button>
+
+            </div>
+
+
+            <div class="legend">
+
+                <div>
+                    <span class="legend-dot current"></span>
+                    Current
+                </div>
+
+                <div>
+                    <span class="legend-dot"></span>
+                    Unanswered
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- QUESTION AREA -->
+
+        <section class="question-area">
+
+
+            <div class="progress-section">
+
+                <div class="progress-info">
+
+                    <span>
+                        QUESTION
+                        <strong th:text="${questionIndex + 1}">
+                            1
+                        </strong>
+                        /
+                        <span th:text="${totalQuestions}">
+                            10
+                        </span>
+                    </span>
+
+                    <span>
+                        <strong th:text="${((questionIndex + 1) * 100) / totalQuestions}">
+                            10
+                        </strong>%
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div class="progress-fill"
+                         th:style="'width:' + ${((questionIndex + 1) * 100) / totalQuestions} + '%'">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="question-card">
+
+
+                <div class="question-meta">
+
+                    <span class="question-type"
+                          th:text="${current_question.type}">
+                        MCQ
+                    </span>
+
+                    <span class="question-number-label">
+
+                        Q<span th:text="${current_question.qno}">
+                            1
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <h1 class="question-text"
+                    th:text="${current_question.question}">
+                    What is JVM?
+                </h1>
+
+
+                <form id="quizForm"
+                      action="/next"
+                      method="post">
+
+
+                    <!-- MCQ -->
+
+                    <div th:if="${current_question.type == 'MCQ'}"
+                         class="options-container">
+
+                        <label th:each="option, stat : ${current_question.options}"
+                               class="option-card">
+
+                            <input type="radio"
+                                   name="quesAns"
+                                   th:value="${option}">
+
+                            <span class="option-letter"
+                                  th:text="${stat.index == 0 ? 'A' :
+                                           stat.index == 1 ? 'B' :
+                                           stat.index == 2 ? 'C' : 'D'}">
+                                A
+                            </span>
+
+                            <span class="option-text"
+                                  th:text="${option}">
+                                Option
+                            </span>
+
+                            <span class="option-check">
+                                ✓
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- TRUE FALSE -->
+
+                    <div th:if="${current_question.type == 'TRUE_FALSE'}"
+                         class="options-container">
+
+                        <label th:each="option, stat : ${current_question.options}"
+                               class="option-card">
+
+                            <input type="radio"
+                                   name="quesAns"
+                                   th:value="${option}">
+
+                            <span class="option-letter"
+                                  th:text="${stat.index == 0 ? 'T' : 'F'}">
+                                T
+                            </span>
+
+                            <span class="option-text"
+                                  th:text="${option}">
+                                true
+                            </span>
+
+                            <span class="option-check">
+                                ✓
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- FILL BLANK -->
+
+                    <div th:if="${current_question.type == 'FILL_BLANK'}"
+                         class="fill-container">
+
+                        <input type="text"
+                               name="quesAns"
+                               class="fill-input"
+                               placeholder="TYPE YOUR ANSWER..."
+                               autocomplete="off">
+
+                    </div>
+
+
+                    <div class="question-actions">
+
+                        <span class="keyboard-hint">
+                            ENTER ↵ TO SUBMIT
+                        </span>
+
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            <span
+                                th:text="${questionIndex + 1 == totalQuestions}
+                                       ? 'FINISH QUIZ'
+                                       : 'NEXT QUESTION'">
+
+                                NEXT QUESTION
+
+                            </span>
+
+                            <span>→</span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script th:src="@{/js/quiz.js}"></script>
+
+</body>
+</html>

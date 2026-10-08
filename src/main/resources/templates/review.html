@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Battleground | Review</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/quiz.css}">
+
+</head>
+
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <span>QUIZ BATTLEGROUND</span>
+    </div>
+
+    <div class="status">
+        ANSWER REVIEW
+    </div>
+
+</header>
+
+
+<main class="review-page">
+
+
+    <div class="review-header">
+
+        <div>
+
+            <div class="eyebrow">
+                QUIZ ANALYSIS
+            </div>
+
+            <h1>
+                REVIEW YOUR
+                <span>ANSWERS</span>
+            </h1>
+
+        </div>
+
+
+        <div class="review-score">
+
+            <span>
+                SCORE
+            </span>
+
+            <strong th:text="${total}">
+                8
+            </strong>
+
+            <small>
+                / 10
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="review-list">
+
+
+        <div th:each="q : ${questions}"
+             class="review-card"
+             th:classappend="${q.marks == 1}
+                             ? ' review-correct'
+                             : ' review-wrong'">
+
+
+            <div class="review-card-header">
+
+
+                <div class="review-question-number">
+
+                    Q<span th:text="${q.qno}">
+                        1
+                    </span>
+
+                </div>
+
+
+                <div class="review-type"
+                     th:text="${q.type}">
+                    MCQ
+                </div>
+
+
+                <div class="review-status"
+                     th:if="${q.marks == 1}">
+
+                    ✓ CORRECT
+
+                </div>
+
+
+                <div class="review-status wrong"
+                     th:if="${q.marks == 0}">
+
+                    ✕ WRONG
+
+                </div>
+
+
+            </div>
+
+
+            <h2 class="review-question"
+                th:text="${q.question}">
+                What is Java?
+            </h2>
+
+
+            <div class="review-answers">
+
+
+                <div class="answer-box user-answer">
+
+                    <span class="answer-label">
+                        YOUR ANSWER
+                    </span>
+
+                    <span class="answer-value"
+                          th:text="${q.userAns == null or q.userAns.isEmpty()
+                                   ? 'NOT ANSWERED'
+                                   : q.userAns}">
+                        Java
+                    </span>
+
+                </div>
+
+
+                <div class="answer-box correct-answer">
+
+                    <span class="answer-label">
+                        CORRECT ANSWER
+                    </span>
+
+                    <span class="answer-value"
+                          th:text="${q.ans}">
+                        Programming Language
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="review-actions">
+
+        <a href="/"
+           class="btn btn-secondary">
+
+            HOME
+
+        </a>
+
+
+        <a href="/start"
+           class="btn btn-primary">
+
+            TRY AGAIN
+            <span>→</span>
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+</body>
+</html>

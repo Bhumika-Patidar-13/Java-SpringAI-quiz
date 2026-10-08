@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Battleground | Result</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/quiz.css}">
+
+</head>
+
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <span>QUIZ BATTLEGROUND</span>
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        QUIZ COMPLETE
+    </div>
+
+</header>
+
+
+<main class="result-page">
+
+
+    <div class="result-card">
+
+
+        <div class="result-eyebrow">
+            MISSION COMPLETE
+        </div>
+
+
+        <h1>
+            YOUR
+            <span>RESULT</span>
+        </h1>
+
+
+        <div class="score-ring">
+
+            <div class="score-inner">
+
+                <span class="score-number"
+                      th:text="${total}">
+                    8
+                </span>
+
+                <span class="score-total">
+                    /
+                    <span th:text="${totalQuestions}">
+                        10
+                    </span>
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="score-label">
+            TOTAL SCORE
+        </div>
+
+
+        <div class="performance"
+             th:if="${total >= 8}">
+
+            <span class="performance-icon">
+                ★
+            </span>
+
+            <h2>
+                JAVA MASTER
+            </h2>
+
+            <p>
+                Excellent work! Your Java fundamentals
+                are looking strong.
+            </p>
+
+        </div>
+
+
+        <div class="performance"
+             th:if="${total >= 5 and total < 8}">
+
+            <span class="performance-icon">
+                ◆
+            </span>
+
+            <h2>
+                JAVA WARRIOR
+            </h2>
+
+            <p>
+                Good job! Keep practicing and you'll
+                reach the next level.
+            </p>
+
+        </div>
+
+
+        <div class="performance"
+             th:if="${total < 5}">
+
+            <span class="performance-icon">
+                ⚡
+            </span>
+
+            <h2>
+                KEEP TRAINING
+            </h2>
+
+            <p>
+                Every expert started somewhere.
+                Keep learning and try again.
+            </p>
+
+        </div>
+
+
+        <div class="result-stats">
+
+
+            <div class="stat-box">
+
+                <strong th:text="${total}">
+                    8
+                </strong>
+
+                <span>
+                    CORRECT
+                </span>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <strong th:text="${totalQuestions - total}">
+                    2
+                </strong>
+
+                <span>
+                    WRONG
+                </span>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <strong
+                    th:text="${T(java.lang.Math).round((total * 100.0) / totalQuestions)} + '%'">
+                    80%
+                </strong>
+
+                <span>
+                    ACCURACY
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="result-actions">
+
+            <a href="/review"
+               class="btn btn-secondary">
+
+                REVIEW ANSWERS
+
+            </a>
+
+
+            <a href="/start"
+               class="btn btn-primary">
+
+                PLAY AGAIN
+                <span>→</span>
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <span>
+        QUIZ BATTLEGROUND
+    </span>
+
+    <span>
+        KEEP CODING. KEEP LEARNING.
+    </span>
+
+</footer>
+
+</body>
+</html>
